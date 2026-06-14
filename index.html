@@ -8,16 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
 
     body {
       min-height: 100vh;
@@ -28,132 +20,156 @@
       font-family: 'Jost', sans-serif;
       overflow: hidden;
       position: relative;
-      background-color: #47607a;
+      background-color: #3a4d63;
     }
 
-    /* Base gradient - darker bottom-left, lighter top-right */
+    /* ---------- Background ---------- */
     .bg {
       position: fixed;
       inset: 0;
+      background-color: #3c5069;
       background:
-        radial-gradient(ellipse 80% 60% at 15% 70%, #2c3e55 0%, transparent 70%),
-        radial-gradient(ellipse 60% 50% at 85% 25%, #5e7d9a 0%, transparent 65%),
-        linear-gradient(140deg, #3b4f68 0%, #4e677f 45%, #526b82 100%);
+        radial-gradient(ellipse 70% 70% at 6% 6%,    #28384a 0%, transparent 55%),
+        radial-gradient(ellipse 90% 80% at 96% 96%,  #2a3a4d 0%, transparent 60%),
+        linear-gradient(125deg, #34465b 0%, #415672 48%, #45597200 60%, #3b4f66 100%);
     }
 
-    /* Diagonal bands overlay */
-    .bands {
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-    }
+    /* Everything diagonal shares this tilt: "/" = bottom-left -> top-right */
+    .diag { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
 
     .band {
       position: absolute;
-      transform: rotate(-42deg);
-      transform-origin: center center;
-      top: -100%;
-      height: 300%;
+      top: -60%;
+      height: 220%;
+      transform: rotate(45deg);
+      transform-origin: center;
     }
 
-    .band-1 {
-      left: 32%;
-      width: 220px;
+    /* Wide soft light slash through the centre */
+    .band-wide {
+      left: 30%;
+      width: 30vmax;
       background: linear-gradient(
         to right,
         transparent 0%,
-        rgba(140, 185, 220, 0.12) 20%,
-        rgba(160, 205, 235, 0.22) 50%,
-        rgba(140, 185, 220, 0.12) 80%,
-        transparent 100%
-      );
+        rgba(150, 188, 220, 0.10) 25%,
+        rgba(178, 210, 236, 0.30) 50%,
+        rgba(150, 188, 220, 0.10) 75%,
+        transparent 100%);
+      filter: blur(2px);
     }
 
-    .band-2 {
-      left: 47%;
-      width: 80px;
-      background: linear-gradient(
-        to right,
-        transparent 0%,
-        rgba(185, 220, 245, 0.28) 40%,
-        rgba(185, 220, 245, 0.28) 60%,
-        transparent 100%
-      );
+    /* Crisp bright fold line */
+    .band-edge {
+      left: 45%;
+      width: 4px;
+      background: linear-gradient(to bottom,
+        transparent, rgba(205, 228, 250, 0.55) 30%, rgba(205, 228, 250, 0.55) 70%, transparent);
     }
 
-    /* Thin scratch marks */
+    /* Dark fold next to the bright edge (the metal crease) */
+    .band-shadow {
+      left: 41%;
+      width: 26px;
+      background: linear-gradient(to right,
+        transparent, rgba(20, 30, 42, 0.28) 50%, transparent);
+      filter: blur(3px);
+    }
+
+    /* Sharp bright "sail" shard near top-centre */
+    .shard {
+      position: absolute;
+      top: -10%;
+      left: 54%;
+      width: 24%;
+      height: 66%;
+      background: linear-gradient(110deg,
+        rgba(120, 158, 190, 0) 30%,
+        rgba(180, 212, 238, 0.5) 58%,
+        rgba(210, 232, 252, 0.72) 66%,
+        rgba(120, 158, 190, 0) 68%);
+      clip-path: polygon(52% 0%, 64% 5%, 20% 100%, 10% 84%);
+      filter: blur(0.4px);
+    }
+
+    /* Thin scratch marks, all parallel to the slash */
     .scratch {
       position: absolute;
-      transform: rotate(-42deg);
-      background: rgba(210, 230, 248, 0.22);
+      transform: rotate(45deg);
+      background: rgba(212, 232, 250, 0.22);
+      border-radius: 2px;
     }
+    .sc1 { width: 1.5px; height: 120px; top: 10%; left: 30%; }
+    .sc2 { width: 1px;   height: 70px;  top: 20%; left: 36%; }
+    .sc3 { width: 1px;   height: 230px; top: 6%;  left: 64%; opacity: .8; }
+    .sc4 { width: 1.5px; height: 90px;  top: 60%; left: 14%; }
+    .sc5 { width: 1px;   height: 60px;  top: 74%; left: 70%; opacity: .6; }
+    .sc6 { width: 1px;   height: 150px; top: 40%; left: 86%; opacity: .7; }
+    .sc7 { width: 1px;   height: 80px;  top: 78%; left: 52%; opacity: .45; }
+    .sc8 { width: 1px;   height: 110px; top: 30%; left: 8%;  opacity: .5; }
 
-    .sc1 { width: 1.5px; height: 130px; top: 8%; left: 22%; }
-    .sc2 { width: 1px;   height: 80px;  top: 18%; left: 28%; }
-    .sc3 { width: 1px;   height: 220px; top: 3%;  left: 68%; }
-    .sc4 { width: 1.5px; height: 90px;  top: 62%; left: 18%; }
-    .sc5 { width: 1px;   height: 55px;  top: 72%; left: 78%; }
-    .sc6 { width: 1px;   height: 160px; top: 35%; left: 88%; }
-    .sc7 { width: 1px;   height: 70px;  top: 50%; left: 55%; opacity: 0.5; }
-
-    /* Content */
+    /* ---------- Content ---------- */
     .content {
       position: relative;
       z-index: 10;
       text-align: center;
-      color: white;
+      color: #fff;
       padding: 24px 20px;
       width: 100%;
-      max-width: 640px;
+      max-width: 720px;
       user-select: none;
     }
 
     .logo {
-      width: clamp(90px, 14vw, 140px);
+      width: clamp(96px, 13vw, 150px);
       height: auto;
-      margin: 0 auto clamp(18px, 3.5vh, 32px);
+      margin: 0 auto clamp(20px, 3.5vh, 34px);
       display: block;
-      filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.25));
+      filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.28));
     }
 
     .brand-name {
-      font-size: clamp(42px, 11vw, 84px);
+      font-size: clamp(46px, 11.5vw, 92px);
       font-weight: 700;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       line-height: 1;
-      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+      text-indent: 0.2em;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.22);
     }
 
     .divider {
-      height: 1.5px;
-      background: rgba(255, 255, 255, 0.88);
-      margin: 10px 0 8px;
-      border-radius: 1px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.9);
+      margin: 12px auto 9px;
+      border-radius: 2px;
     }
 
     .brand-sub {
-      font-size: clamp(13px, 2.8vw, 22px);
+      font-size: clamp(14px, 3vw, 24px);
       font-weight: 300;
-      letter-spacing: 0.6em;
-      text-indent: 0.6em;
+      letter-spacing: 0.62em;
+      text-indent: 0.62em;
       opacity: 0.95;
     }
 
     .coming-soon {
-      margin-top: clamp(30px, 5.5vh, 65px);
-      font-size: clamp(30px, 7.5vw, 62px);
+      margin-top: clamp(38px, 7vh, 90px);
+      font-size: clamp(38px, 9vw, 78px);
       font-weight: 300;
-      letter-spacing: 0.02em;
-      color: rgba(155, 192, 220, 0.46);
+      letter-spacing: 0.01em;
+      color: rgba(150, 188, 218, 0.5);
+      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
     }
   </style>
 </head>
 <body>
   <div class="bg"></div>
 
-  <div class="bands">
-    <div class="band band-1"></div>
-    <div class="band band-2"></div>
+  <div class="diag">
+    <div class="band band-shadow"></div>
+    <div class="band band-wide"></div>
+    <div class="band band-edge"></div>
+    <div class="shard"></div>
     <div class="scratch sc1"></div>
     <div class="scratch sc2"></div>
     <div class="scratch sc3"></div>
@@ -161,29 +177,29 @@
     <div class="scratch sc5"></div>
     <div class="scratch sc6"></div>
     <div class="scratch sc7"></div>
+    <div class="scratch sc8"></div>
   </div>
 
   <div class="content">
-    <!-- Logo: foil/hull shape with wing lines — stylised foiling sailboat silhouette -->
-    <svg class="logo" viewBox="0 0 130 105" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
-      <!-- Left wing -->
-      <line x1="65" y1="68" x2="5"   y2="100" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
-      <!-- Right wing -->
-      <line x1="65" y1="68" x2="125" y2="100" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
-      <!-- Central foil — elongated almond / surfboard shape -->
-      <path d="M65 6
-               C70 6, 77 18, 77 40
-               C77 62, 70 76, 65 80
-               C60 76, 53 62, 53 40
-               C53 18, 60 6, 65 6 Z"
+    <!-- Foiling emblem: vertical board with two thin wings sweeping up & out -->
+    <svg class="logo" viewBox="0 0 130 92" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Wings: thin needles from a low vertex, sweeping up and outward -->
+      <path d="M65 72 L11 14 L17 16 L65 76 Z" fill="white"/>
+      <path d="M65 72 L119 14 L113 16 L65 76 Z" fill="white"/>
+      <!-- Central board: elongated almond, pointed top & bottom -->
+      <path d="M65 4
+               C69 4, 76 16, 76 40
+               C76 60, 70 72, 65 76
+               C60 72, 54 60, 54 40
+               C54 16, 61 4, 65 4 Z"
             fill="white"/>
-      <!-- Subtle highlight ridge on foil -->
-      <path d="M62 12
-               C63 12, 66 20, 66 38
-               C66 54, 63 65, 62 68
-               C60 65, 59 54, 59 38
-               C59 20, 60 12, 62 12 Z"
-            fill="rgba(210,230,248,0.55)"/>
+      <!-- Subtle centre stringer highlight -->
+      <path d="M65 10
+               C66 10, 69 18, 69 39
+               C69 55, 66 66, 65 69
+               C64 66, 61 55, 61 39
+               C61 18, 64 10, 65 10 Z"
+            fill="rgba(196,221,244,0.6)"/>
     </svg>
 
     <div class="brand-name">VOLTAIR</div>
