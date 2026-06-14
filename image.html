@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltair Marine — Coming Soon</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+      background-color: #34465b;
+    }
+    .wrap { position: fixed; inset: 0; overflow: hidden; }
+    /* Blurred backdrop fills any letterbox area on portrait/odd ratios */
+    .wrap::before {
+      content: "";
+      position: absolute;
+      inset: -5%;
+      background: url("hero.jpg") center / cover no-repeat;
+      filter: blur(34px) brightness(0.7) saturate(1.1);
+      transform: scale(1.12);
+    }
+    /* Sharp, fully-visible hero image */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img class="hero" src="hero.jpg" alt="Voltair Marine — Coming Soon">
+  </div>
+</body>
+</html>

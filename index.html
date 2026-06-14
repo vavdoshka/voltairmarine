@@ -59,12 +59,13 @@
       filter: blur(2px);
     }
 
-    /* Crisp bright fold line */
+    /* Soft bright fold line (subtle, not a harsh stripe) */
     .band-edge {
       left: 45%;
-      width: 4px;
+      width: 8px;
       background: linear-gradient(to bottom,
-        transparent, rgba(205, 228, 250, 0.55) 30%, rgba(205, 228, 250, 0.55) 70%, transparent);
+        transparent, rgba(198, 222, 246, 0.28) 30%, rgba(198, 222, 246, 0.28) 70%, transparent);
+      filter: blur(2px);
     }
 
     /* Dark fold next to the bright edge (the metal crease) */
@@ -85,11 +86,11 @@
       height: 66%;
       background: linear-gradient(110deg,
         rgba(120, 158, 190, 0) 30%,
-        rgba(180, 212, 238, 0.5) 58%,
-        rgba(210, 232, 252, 0.72) 66%,
+        rgba(180, 212, 238, 0.34) 58%,
+        rgba(210, 232, 252, 0.5) 66%,
         rgba(120, 158, 190, 0) 68%);
       clip-path: polygon(52% 0%, 64% 5%, 20% 100%, 10% 84%);
-      filter: blur(0.4px);
+      filter: blur(1.2px);
     }
 
     /* Thin scratch marks, all parallel to the slash */
@@ -121,9 +122,9 @@
     }
 
     .logo {
-      width: clamp(96px, 13vw, 150px);
-      height: auto;
-      margin: 0 auto clamp(20px, 3.5vh, 34px);
+      height: clamp(120px, 22vh, 196px);
+      width: auto;
+      margin: 0 auto clamp(18px, 3vh, 30px);
       display: block;
       filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.28));
     }
@@ -181,25 +182,36 @@
   </div>
 
   <div class="content">
-    <!-- Foiling emblem: vertical board with two thin wings sweeping up & out -->
-    <svg class="logo" viewBox="0 0 130 92" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <!-- Wings: thin needles from a low vertex, sweeping up and outward -->
-      <path d="M65 72 L11 14 L17 16 L65 76 Z" fill="white"/>
-      <path d="M65 72 L119 14 L113 16 L65 76 Z" fill="white"/>
-      <!-- Central board: elongated almond, pointed top & bottom -->
-      <path d="M65 4
-               C69 4, 76 16, 76 40
-               C76 60, 70 72, 65 76
-               C60 72, 54 60, 54 40
-               C54 16, 61 4, 65 4 Z"
-            fill="white"/>
-      <!-- Subtle centre stringer highlight -->
-      <path d="M65 10
-               C66 10, 69 18, 69 39
-               C69 55, 66 66, 65 69
-               C64 66, 61 55, 61 39
-               C61 18, 64 10, 65 10 Z"
-            fill="rgba(196,221,244,0.6)"/>
+    <!-- Foiling emblem: forked-nose board with two thin wings sweeping up & out -->
+    <svg class="logo" viewBox="0 0 160 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="board" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"   stop-color="#dde6ee"/>
+          <stop offset="0.45" stop-color="#ffffff"/>
+          <stop offset="1"   stop-color="#eef3f8"/>
+        </linearGradient>
+      </defs>
+
+      <!-- Thin needle wings, tapering to a point, sweeping up & outward -->
+      <path d="M80 232 L10 120 L20 122 L80 240 Z"  fill="#eef3f8"/>
+      <path d="M80 232 L150 120 L140 122 L80 240 Z" fill="#eef3f8"/>
+
+      <!-- Small dorsal fin at the very nose -->
+      <path d="M80 8 C84 18, 86 26, 80 34 C74 26, 76 18, 80 8 Z" fill="url(#board)"/>
+
+      <!-- Board body: pointed nose & tail, wide middle -->
+      <path d="M80 30
+               C98 62, 110 112, 110 168
+               C110 226, 96 264, 80 286
+               C64 264, 50 226, 50 168
+               C50 112, 62 62, 80 30 Z"
+            fill="url(#board)"/>
+
+      <!-- Forked-nose inlay: slim leaf in the upper third -->
+      <path d="M80 46 C71 74, 71 104, 80 126 C89 104, 89 74, 80 46 Z"
+            fill="none" stroke="rgba(70,92,118,0.45)" stroke-width="2.4"/>
+      <!-- Centre stringer -->
+      <line x1="80" y1="126" x2="80" y2="262" stroke="rgba(70,92,118,0.40)" stroke-width="2.2"/>
     </svg>
 
     <div class="brand-name">VOLTAIR</div>
